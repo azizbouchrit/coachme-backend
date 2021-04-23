@@ -1,4 +1,4 @@
-const Program = require("../models/Program");
+const { Program, validate } = require("../models/Program");
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
@@ -28,12 +28,13 @@ const getById = async (req, res) => {
   }
 };
 const create = async (req, res) => {
-  //validation
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
   try {
     let program = new Program({
-      program_name: req.body.program_name,
-      freq: req.body.freq,
-      nb_ins: req.body.nb_ins,
+      programName: req.body.programName,
+      frequence: req.body.frequence,
+      numberInscriptions: req.body.numberInscriptions,
       period: req.body.period,
     });
     program = await program.save();
@@ -43,13 +44,14 @@ const create = async (req, res) => {
   }
 };
 const update = async (req, res) => {
-  //validation
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
   try {
     const program = await Program.findByIdAndUpdate(req.params.id, {
-      program_name: req.body.program_name,
-      freq: req.body.freq,
-      nb_ins: req.body.nb_ins,
-      timing: req.body.timing,
+      programName: req.body.programName,
+      frequence: req.body.frequence,
+      numberInscriptions: req.body.numberInscriptions,
+      period: req.body.period,
       new: true,
     });
     if (!program)
@@ -76,6 +78,7 @@ const deleteById = async (req, res) => {
     console.log("err", err);
   }
 };
+
 exports.getAll = getAll;
 exports.getById = getById;
 exports.create = create;

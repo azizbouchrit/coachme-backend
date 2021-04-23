@@ -1,10 +1,24 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const Program = mongoose.Schema({
-  program_name: { type: String, default: "" },
-  freq: { type: Number, default: "" },
-  nb_ins: { type: Number, default: "" },
-  period: { type: Number, default: "" },
-});
+const Program = mongoose.model(
+  "Program",
+  new mongoose.Schema({
+    programName: { type: String, default: "" },
+    frequence: { type: Number },
+    numberInscriptions: { type: Number },
+    period: { type: Number },
+  })
+);
 
-module.exports = mongoose.model("Program", Program);
+function validateProgram(program) {
+  const schema = {
+    programName: Joi.string().min(3).required(),
+    frequence: Joi.number().min(0).required(),
+    numberInscriptions: Joi.number().min(0).required(),
+    period: Joi.number().min(0).required(),
+  };
+
+  return Joi.validate(program, schema);
+}
+exports.Program = Program;
+exports.validate = validateProgram;

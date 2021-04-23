@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const programRouter = express.Router();
 const programCtrl = require("../controllers/program");
 
-programRouter.get("/getAll", programCtrl.getAll);
-programRouter.get("/getById/:id", programCtrl.getById);
-programRouter.post("/create", programCtrl.create);
-programRouter.put("/update/:id", programCtrl.update);
-programRouter.delete("/deleteById/:id", programCtrl.deleteById);
+programRouter.get("/", programCtrl.getAll);
+programRouter.get("/:id", programCtrl.getById);
+programRouter.post("/", programCtrl.create);
+programRouter.put("/:id", programCtrl.update);
+programRouter.delete("/:id", programCtrl.deleteById);
 module.exports = programRouter;
