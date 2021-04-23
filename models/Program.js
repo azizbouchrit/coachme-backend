@@ -5,7 +5,7 @@ const Program = mongoose.model(
   new mongoose.Schema({
     programName: { type: String, default: "" },
     frequence: { type: Number },
-    numberInscriptions: { type: Number },
+    numberSubscriptions: { type: Number },
     period: { type: Number },
   })
 );
@@ -14,7 +14,7 @@ function validateProgram(program) {
   const schema = {
     programName: Joi.string().min(3).required(),
     frequence: Joi.number().min(0).required(),
-    numberInscriptions: Joi.number().min(0).required(),
+    numberSubscriptions: Joi.number().min(0).required(),
     period: Joi.number().min(0).required(),
   };
 

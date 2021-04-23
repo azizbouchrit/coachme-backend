@@ -34,7 +34,7 @@ const create = async (req, res) => {
     let program = new Program({
       programName: req.body.programName,
       frequence: req.body.frequence,
-      numberInscriptions: req.body.numberInscriptions,
+      numberSubscriptions: req.body.numberSubscriptions,
       period: req.body.period,
     });
     program = await program.save();
@@ -50,7 +50,7 @@ const update = async (req, res) => {
     const program = await Program.findByIdAndUpdate(req.params.id, {
       programName: req.body.programName,
       frequence: req.body.frequence,
-      numberInscriptions: req.body.numberInscriptions,
+      numberSubscriptions: req.body.numberSubscriptions,
       period: req.body.period,
       new: true,
     });
