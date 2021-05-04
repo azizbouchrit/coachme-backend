@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const programs = require("./routes/programs");
+/*const programs = require("./routes/programs");*/
+const exercices = require("./routes/exercices");
+const evolutions = require("./routes/evolutions");
+const feedbacks = require("./routes/feedbacks");
+const files = require("./routes/files");
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,7 +22,11 @@ mongoose
   .then(() => console.log("connected to mongodb ..."))
   .catch((err) => console.error("could not connect to mongodb ...", err));
 app.use(express.json());
-app.use("/programs", programs);
+/*app.use("/programs", programs);*/
+app.use("/exercices",exercices);
+app.use("/evolutions",evolutions);
+app.use("/feedbacks",feedbacks);
+app.use("/files",files);
 
 app.get("/", (req, res) => {
   console.log("opening ... ");
