@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const auth = require("./routes/auth");
 const programs = require("./routes/programs");
+const users = require("./routes/users");
+const comments = require("./routes/comments");
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -18,6 +21,9 @@ mongoose
   .catch((err) => console.error("could not connect to mongodb ...", err));
 app.use(express.json());
 app.use("/programs", programs);
+app.use("/api/users", users);
+app.use('/api/auth', auth);
+app.use('/api/comments', comments)
 
 app.get("/", (req, res) => {
   console.log("opening ... ");
