@@ -1,8 +1,30 @@
 const mongoose = require("mongoose");
-const Instruction = mongoose.Schema({
-  instruction_name: { type: String, default: "" },
-  nb_series: { type: Number, default: "" },
-  nb_repetition: { type: Number, default: "" },
-  time_exec: { type: Number, default: "" },
-});
-module.exports = mongoose.model("Instruction", Instruction);
+const Joi = require("joi");
+
+const Instruction = mongoose.model(
+  "Instruction",
+  new mongoose.Schema({
+    instructionName: { type: String, default: "" },
+    sessionId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Session",
+      required: true,
+    },
+    numberSeries: { type: Number },
+    numberRepetitions: { type: Number },
+    executionTime: { type: Number },
+  })
+);
+function validateInstruction(Instruction) {
+  const schema = {
+    instructionName: Joi.string().min(3).required(),
+    sessionId: Joi.string().required(),
+    numberSeries: Joi.number().min(0).required(),
+    numberRepetitions: Joi.number().min(0).required(),
+    executionTime: Joi.number().min(0).required(),
+  };
+
+  return Joi.validate(Instruction, schema);
+}
+exports.Instruction = Instruction;
+exports.validate = validateInstruction;
