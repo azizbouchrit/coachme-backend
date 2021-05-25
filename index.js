@@ -8,6 +8,10 @@ const files = require("./routes/files");
 
 const auth = require("./routes/auth");
 const programs = require("./routes/programs");
+const weeks = require("./routes/weeks");
+const sessions = require("./routes/sessions");
+const instructions = require("./routes/instructions");
+
 const users = require("./routes/users");
 const comments = require("./routes/comments");
 const options = {
@@ -25,6 +29,9 @@ mongoose
   .then(() => console.log("connected to mongodb ..."))
   .catch((err) => console.error("could not connect to mongodb ...", err));
 app.use(express.json());
+app.use("/api/sessions", sessions);
+app.use("/api/weeks", weeks);
+app.use("/api/instructions", instructions);
 app.use("/api/exercices",exercices);
 app.use("/api/evolutions",evolutions);
 app.use("/api/feedbacks",feedbacks);
