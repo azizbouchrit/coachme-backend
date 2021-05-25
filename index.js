@@ -8,6 +8,10 @@ const files = require("./routes/files");
 
 const auth = require("./routes/auth");
 const programs = require("./routes/programs");
+const goals = require("./routes/goals");
+const sessionsDate = require("./routes/sessionsDate");
+const subscriptions = require("./routes/subscriptions");
+const difficulties = require("./routes/difficulties");
 const weeks = require("./routes/weeks");
 const sessions = require("./routes/sessions");
 const instructions = require("./routes/instructions");
@@ -29,6 +33,10 @@ mongoose
   .then(() => console.log("connected to mongodb ..."))
   .catch((err) => console.error("could not connect to mongodb ...", err));
 app.use(express.json());
+app.use("/api/goals", goals);
+app.use("/api/sessionsDate", sessionsDate);
+app.use("/api/subscriptions", subscriptions);
+app.use("/api/difficulties", difficulties);
 app.use("/api/sessions", sessions);
 app.use("/api/weeks", weeks);
 app.use("/api/instructions", instructions);
