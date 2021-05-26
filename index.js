@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const programs = require("./routes/programs");
 const weeks = require("./routes/weeks");
@@ -20,6 +21,7 @@ mongoose
   .connect("mongodb://localhost/coachme", options)
   .then(() => console.log("connected to mongodb ..."))
   .catch((err) => console.error("could not connect to mongodb ...", err));
+app.use(cors());
 app.use(express.json());
 app.use("/programs", programs);
 app.use("/sessions", sessions);
