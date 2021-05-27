@@ -79,6 +79,54 @@ const deleteById = async (req, res) => {
   }
 };
 
+const updateRating = async (req, res) => {
+  const { user_id, rate } = req.body;
+  const { program_id } = req.params;
+  try {
+    const program = await Program.findById(program_id);
+
+    if (!program)
+      return {
+        status: false,
+        code: 404,
+        err: { msg: "the program with given id not found " },
+      };
+    const notes = program.notes || [];
+
+    let rating = program.rating || 1;
+
+    let somme = 1;
+    for (let i = 0; i < notes.length; i++) {
+      if (notes[i].user == user_id) {
+        notes.splice(i, 1);
+      } else {
+        somme = somme + notes[i].rate;
+      }
+    }
+
+    notes.push({ user: user_id, rate });
+
+    rating = somme / notes.length;
+    console.log(rating);
+    const patch = await Program.updateOne(
+      { _id: program_id },
+      { $set: { notes, rating } }
+    );
+    if (patch) {
+      const new_program = await Program.findById(program_id);
+      console.log(new_program);
+      if (!new_program) {
+        return { status: false, code: 500, err: { msg: "program not saved " } };
+      }
+      res.send(new_program);
+    } else {
+      return { status: false, code: 500, err: { msg: "program not updated " } };
+    }
+  } catch (err) {
+    console.log("err", err);
+  }
+};
+exports.updateRating = updateRating;
 exports.getAll = getAll;
 exports.getById = getById;
 exports.create = create;
