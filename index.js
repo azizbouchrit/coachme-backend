@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const exercices = require("./routes/exercices");
 const evolutions = require("./routes/evolutions");
@@ -32,6 +33,7 @@ mongoose
   .connect("mongodb://localhost/coachme", options)
   .then(() => console.log("connected to mongodb ..."))
   .catch((err) => console.error("could not connect to mongodb ...", err));
+app.use(cors());
 app.use(express.json());
 app.use("/api/goals", goals);
 app.use("/api/sessionsDate", sessionsDate);
