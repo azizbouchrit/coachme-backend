@@ -9,4 +9,6 @@ programRouter.post("/", programCtrl.create);
 programRouter.put("/:id", programCtrl.update);
 programRouter.delete("/:id", programCtrl.deleteById);
 programRouter.post("/rating/:program_id", programCtrl.updateRating);
+programRouter.post("/follow/:program_id", programCtrl.followProgram);
+
 module.exports = programRouter;

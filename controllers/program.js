@@ -1,4 +1,5 @@
 const { Program, validate } = require("../models/Program");
+const { User } = require("../models/user");
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
@@ -95,7 +96,7 @@ const updateRating = async (req, res) => {
 
     let rating = program.rating || 1;
 
-    let somme = 1;
+    let somme = 0;
     for (let i = 0; i < notes.length; i++) {
       if (notes[i].user == user_id) {
         notes.splice(i, 1);
@@ -105,12 +106,14 @@ const updateRating = async (req, res) => {
     }
 
     notes.push({ user: user_id, rate });
+    somme = somme + rate;
+    console.log(somme, notes);
 
     rating = somme / notes.length;
     console.log(rating);
     const patch = await Program.updateOne(
       { _id: program_id },
-      { $set: { notes, rating } }
+      { $set: { notes, rating: rating.toFixed(1) } }
     );
     if (patch) {
       const new_program = await Program.findById(program_id);
@@ -126,9 +129,54 @@ const updateRating = async (req, res) => {
     console.log("err", err);
   }
 };
+const followProgram = async (req, res) => {
+  const { user_id } = req.body;
+  console.log("//// user_id : ", user_id);
+  const { program_id } = req.params;
+  try {
+    const user = await User.findById(user_id);
+
+    if (!user)
+      return {
+        status: false,
+        code: 404,
+        err: { msg: "the user with given id not found " },
+      };
+    else {
+      const programs = user.programs || [];
+      let exist = false;
+      for (let i = 0; i < programs.length; i++) {
+        if (programs[i].program == program_id) {
+          exist = true;
+        }
+      }
+      if (!exist) {
+        programs.push({
+          program: program_id,
+        });
+      }
+      const updated_user = await User.updateOne(
+        { _id: user_id },
+        { $set: { programs } }
+      );
+      if (updated_user) {
+        res.send(updated_user);
+      } else {
+        return {
+          status: false,
+          code: 400,
+          err: { msg: "user not updated " },
+        };
+      }
+    }
+  } catch (err) {
+    console.log("err", err);
+  }
+};
 exports.updateRating = updateRating;
 exports.getAll = getAll;
 exports.getById = getById;
 exports.create = create;
 exports.update = update;
 exports.deleteById = deleteById;
+exports.followProgram = followProgram;

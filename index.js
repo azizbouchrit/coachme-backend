@@ -42,14 +42,14 @@ app.use("/api/difficulties", difficulties);
 app.use("/api/sessions", sessions);
 app.use("/api/weeks", weeks);
 app.use("/api/instructions", instructions);
-app.use("/api/exercices",exercices);
-app.use("/api/evolutions",evolutions);
-app.use("/api/feedbacks",feedbacks);
-app.use("/api/files",files);
+app.use("/api/exercices", exercices);
+app.use("/api/evolutions", evolutions);
+app.use("/api/feedbacks", feedbacks);
+app.use("/api/files", files);
 app.use("/api/programs", programs);
 app.use("/api/users", users);
-app.use('/api/auth', auth);
-app.use('/api/comments', comments)
+app.use("/api/auth", auth);
+app.use("/api/comments", comments);
 
 app.get("/", (req, res) => {
   console.log("opening ... ");
