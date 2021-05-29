@@ -22,6 +22,13 @@ const Program = mongoose.model(
       }),
       required: true
     },
+    rating: { type: Number, default: 1, trim: true },
+    notes: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        rate: { type: Number, default: 0, trim: true },
+      },
+    ],
   })
 );
 

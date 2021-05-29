@@ -6,7 +6,8 @@ const auth = require("../middlewares/auth");
 
 programRouter.get("/", programCtrl.getAll);
 programRouter.get("/:id", programCtrl.getById);
-programRouter.post("/", auth, programCtrl.create);
-programRouter.put("/:id", auth, programCtrl.update);
-programRouter.delete("/:id", auth, programCtrl.deleteById);
+programRouter.post("/", programCtrl.create);
+programRouter.put("/:id", programCtrl.update);
+programRouter.delete("/:id", programCtrl.deleteById);
+programRouter.post("/rating/:program_id", programCtrl.updateRating);
 module.exports = programRouter;

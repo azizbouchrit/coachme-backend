@@ -8,4 +8,4 @@ router.get('/me', auth, userController.getCurrentUser)
 router.post('/', userController.createUser)
 router.get('/coaches/popular', userController.getPopularCoaches)
 
-module.exports = router
+module.exports = router;
