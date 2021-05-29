@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+var cors = require('cors')
+
 const exercices = require("./routes/exercices");
 const evolutions = require("./routes/evolutions");
 const feedbacks = require("./routes/feedbacks");
-const files = require("./routes/files");
+// const files = require("./routes/files");
 
 const auth = require("./routes/auth");
 const programs = require("./routes/programs");
@@ -33,17 +35,20 @@ mongoose
   .then(() => console.log("connected to mongodb ..."))
   .catch((err) => console.error("could not connect to mongodb ...", err));
 app.use(express.json());
+app.use(cors())
+
+
 app.use("/api/goals", goals);
-app.use("/api/sessionsDate", sessionsDate);
+// app.use("/api/sessionsDate", sessionsDate);
 app.use("/api/subscriptions", subscriptions);
 app.use("/api/difficulties", difficulties);
-app.use("/api/sessions", sessions);
-app.use("/api/weeks", weeks);
-app.use("/api/instructions", instructions);
-app.use("/api/exercices",exercices);
-app.use("/api/evolutions",evolutions);
+// app.use("/api/sessions", sessions);
+// app.use("/api/weeks", weeks);
+// app.use("/api/instructions", instructions);
+// app.use("/api/exercices",exercices);
+// app.use("/api/evolutions",evolutions);
 app.use("/api/feedbacks",feedbacks);
-app.use("/api/files",files);
+// app.use("/api/files",files);
 app.use("/api/programs", programs);
 app.use("/api/users", users);
 app.use('/api/auth', auth);
