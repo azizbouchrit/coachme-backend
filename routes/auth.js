@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken()
 
-    res.send(token)
+    res.send({ user: _.pick(user, ['_id', 'username', 'firstName', 'lastName', 'email', 'role']), token })
     
 })
 

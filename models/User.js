@@ -50,6 +50,10 @@ const userSchema = mongoose.Schema({
     default: "MEMBER", // "COACH" "ADMIN"
     // required: true,
 
+  },
+  avatar: {
+    type: String,
+
   }
 
 
@@ -78,6 +82,7 @@ function validateUser(user) {
     birthDate: Joi.date().required(),
     address: Joi.string().min(3).max(255),
     role: Joi.string().min(3).max(255).required(),
+    avatar: Joi.string(),
   }
   return Joi.validate(user, schema);
 }

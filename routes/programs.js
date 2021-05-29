@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const programRouter = express.Router();
 const programCtrl = require("../controllers/program");
+const auth = require("../middlewares/auth");
 
 programRouter.get("/", programCtrl.getAll);
 programRouter.get("/:id", programCtrl.getById);

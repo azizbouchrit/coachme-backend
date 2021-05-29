@@ -2,6 +2,8 @@ const { Program, validate } = require("../models/Program");
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
+const { User, decodeAuthToken } = require("../models/user");
+
 
 const getAll = async (req, res) => {
   try {
@@ -30,12 +32,21 @@ const getById = async (req, res) => {
 const create = async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
+  const token = req.header('x-auth-token')
+  const user = decodeAuthToken(token)
+  console.log('user', user);
   try {
     let program = new Program({
       programName: req.body.programName,
       frequence: req.body.frequence,
       numberSubscriptions: req.body.numberSubscriptions,
       period: req.body.period,
+      user: {
+        _id: user._id,
+        username: user.username,
+        role: user.role
+      }
     });
     program = await program.save();
     res.send(program);

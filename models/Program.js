@@ -7,6 +7,21 @@ const Program = mongoose.model(
     frequence: { type: Number },
     numberSubscriptions: { type: Number },
     period: { type: Number },
+    user: {
+      type: new mongoose.Schema({
+        username: {
+          type: String,
+          required: true,
+          minlength: 3,
+          maxlength: 50
+        },
+        role: {
+          type: String,
+          required: true,
+        }
+      }),
+      required: true
+    },
     rating: { type: Number, default: 1, trim: true },
     notes: [
       {
